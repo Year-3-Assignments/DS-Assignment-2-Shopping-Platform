@@ -1,35 +1,31 @@
 package com.shopping.shoppingapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "shops")
-public class Shop {
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String shopName;
-    private String phoneNumber;
+    private String productName;
+    private Double unitPrice;
+    private String description;
+    private Integer quantity;
     @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private Seller seller;
-    @OneToMany(mappedBy = "shop")
-    @JsonManagedReference
-    private List<Product> products;
-
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
 
     @JsonBackReference
-    public Seller getSeller() {
-        return seller;
+    public Shop getShop() {
+        return shop;
     }
 }
