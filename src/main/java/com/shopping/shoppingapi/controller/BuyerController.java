@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin("*")//'*' is for all the urls to work
+@CrossOrigin("*")
 @RequestMapping(value = "/api/buyer")
 @RestController
 public class BuyerController {
