@@ -28,7 +28,7 @@ public class ShopService {
         Shop shopInfo = shopRepository.findById(shop.getId()).orElse(null);
         shopInfo.setShopName(shop.getShopName());
         shopInfo.setPhoneNumber(shop.getPhoneNumber());
-        shopInfo.setSeller(shop.getSeller());
+        shopInfo.setUser(shop.getSeller());
         return shopRepository.save(shopInfo);
     }
 

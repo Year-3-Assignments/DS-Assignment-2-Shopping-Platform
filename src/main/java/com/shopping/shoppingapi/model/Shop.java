@@ -22,14 +22,14 @@ public class Shop {
     private String phoneNumber;
     @ManyToOne
     @JoinColumn(name = "seller_id")
-    private Seller seller;
+    private User user;
     @OneToMany(mappedBy = "shop")
     @JsonManagedReference
     private List<Product> products;
 
 
     @JsonBackReference
-    public Seller getSeller() {
-        return seller;
+    public User getSeller() {
+        return user;
     }
 }
