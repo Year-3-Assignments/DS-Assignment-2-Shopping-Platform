@@ -27,7 +27,6 @@ public class Seller {
     private String address_2;
     private String city;
     private String country;
-
     @OneToMany(mappedBy = "seller")
     @JsonManagedReference
     private List<Shop> shops;
