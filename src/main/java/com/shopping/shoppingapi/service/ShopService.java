@@ -16,12 +16,12 @@ public class ShopService {
         return shopRepository.save(shop);
     }
 
-    public Shop getShopById(Integer shopId) {
+    public Shop getShopById(Long shopId) {
         return shopRepository.findById(shopId).orElse(null);
     }
 
-    public List<Shop> getAllShops() {
-        return shopRepository.findAll();
+    public List<Shop> getSellerShops(Long sellerId) {
+        return shopRepository.getAllSellerShops(sellerId);
     }
 
     public Shop updateShop(Shop shop) {
@@ -32,7 +32,7 @@ public class ShopService {
         return shopRepository.save(shopInfo);
     }
 
-    public String deleteShop(Integer shopId) {
+    public String deleteShop(Long shopId) {
         shopRepository.deleteById(shopId);
         return "Deleted shop ID -" + shopId;
     }

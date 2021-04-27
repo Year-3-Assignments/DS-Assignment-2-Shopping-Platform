@@ -13,7 +13,9 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public Product addProduct(Product product) {
-        return productRepository.save(product);
+        Product newProduct = new Product(product.getProductName(), product.getUnitPrice(),
+                product.getDescription(), product.getQuantity(), product.getShop());
+        return productRepository.save(newProduct);
     }
 
     public Product getProductById(Integer productId) {

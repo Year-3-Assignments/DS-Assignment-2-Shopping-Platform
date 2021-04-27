@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,16 +19,25 @@ import java.util.List;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
+    @NotBlank
     private String shopName;
+
+    @NotBlank
     private String phoneNumber;
+
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User user;
+
     @OneToMany(mappedBy = "shop")
     @JsonManagedReference
     private List<Product> products;
 
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
 
     @JsonBackReference
     public User getSeller() {
