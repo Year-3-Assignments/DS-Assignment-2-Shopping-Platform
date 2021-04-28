@@ -10,11 +10,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Random;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,10 @@ public class Product {
     }
 
     public Product() {}
+
+    public Product(@NonNull Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Product(String productName, Double unitPrice, String description, Integer quantity, Shop shop) {
         this.productName = productName;
