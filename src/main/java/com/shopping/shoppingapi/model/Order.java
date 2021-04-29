@@ -23,8 +23,10 @@ public class Order {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name= "user")
+    @JoinColumn(name= "user_id")
     private User user;
+
+    public Order() {}
 
     public Order(User user) {
         this.user = user;
