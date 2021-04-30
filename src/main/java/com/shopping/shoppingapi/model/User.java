@@ -3,10 +3,8 @@ package com.shopping.shoppingapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,6 +50,13 @@ public class User {
         this.password = password;
     }
 
+    public User(Long userid, String address_1, String address_2, String city, String email){
+        this.id = userid;
+        this.email = email;
+        this.address_1 = address_1;
+        this.address_2 = address_2;
+        this.city = city;
+    }
     public User(String firstName, String lastName, String phoneNumber, String username, String email,
                 String address_1, String address_2, String city, String encode) {
         this.firstName = firstName;
