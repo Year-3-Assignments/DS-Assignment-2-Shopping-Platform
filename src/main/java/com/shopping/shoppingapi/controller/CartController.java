@@ -1,6 +1,7 @@
 package com.shopping.shoppingapi.controller;
 
 import com.shopping.shoppingapi.model.Cart;
+import com.shopping.shoppingapi.payload.response.ResponseCart;
 import com.shopping.shoppingapi.service.CartService;
 import com.shopping.shoppingapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class CartController {
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('BUYER')")
-    public List<Cart> getCartItems(@PathVariable Long userId) {
-        return cartService.getAllCartItems(userId);
+    public ResponseEntity<ResponseCart> getCartItems(@PathVariable Long userId) {
+        return cartService.fetchCartItems(userId);
     }
 
     @PutMapping("/change/add/{cartId}")

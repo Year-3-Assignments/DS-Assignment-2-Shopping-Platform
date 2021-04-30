@@ -68,6 +68,14 @@ public class Product {
         this.createdAt = new Date();
     }
 
+    public Product(String itemCode, @NonNull String productName, Double unitPrice, Date createdAt, String imageUrl) {
+        this.itemCode = itemCode;
+        this.productName = productName;
+        this.unitPrice = unitPrice;
+        this.createdAt = createdAt;
+        this.imageUrl = imageUrl;
+    }
+
     public String generateItemCode() {
         char[] _base62chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
         Random random = new Random();

@@ -2,6 +2,7 @@ package com.shopping.shoppingapi.service;
 
 import com.shopping.shoppingapi.model.Cart;
 import com.shopping.shoppingapi.model.Product;
+import com.shopping.shoppingapi.payload.response.ResponseCart;
 import com.shopping.shoppingapi.repository.CartRepository;
 import com.shopping.shoppingapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,6 +51,21 @@ public class CartService {
 
     public List<Cart> getAllCartItems(Long userId) {
         return cartRepository.getAllCartItems(userId);
+    }
+
+    public ResponseEntity<ResponseCart> fetchCartItems(Long userId) {
+        List<Cart> carts = cartRepository.getAllCartItems(userId);
+        List<ResponseCart> cartList = new ArrayList<>();
+
+        for (Cart item: carts) {
+            Product[] products = new Product[item.getProducts().size()];
+            item.getProducts().toArray(products);
+
+            ResponseCart responseCart = new ResponseCart(item.getQuantity(), item.getTotalPrice(), item.getStatus(), products[0]);
+            cartList.add(responseCart);
+        }
+
+        return new ResponseEntity(cartList, HttpStatus.OK);
     }
 
     public Cart incrementCartItem(Long cartId) {
@@ -121,5 +138,10 @@ public class CartService {
         productRepository.save(product);
         cartRepository.deleteById(cartId);
         return "Cart Item deleted";
+    }
+
+    public String deleteCartByUserId(Long userId) {
+        cartRepository.deleteAllByUserId(userId);
+        return "Purchase cart items remove";
     }
 }

@@ -1,11 +1,9 @@
 package com.shopping.shoppingapi.controller;
 
-import com.shopping.shoppingapi.model.Cart;
-import com.shopping.shoppingapi.model.Payment;
-import com.shopping.shoppingapi.model.PaymentClient;
-import com.shopping.shoppingapi.model.User;
+import com.shopping.shoppingapi.model.*;
 import com.shopping.shoppingapi.repository.CartRepository;
 import com.shopping.shoppingapi.service.CartService;
+import com.shopping.shoppingapi.service.OrderService;
 import com.shopping.shoppingapi.service.PaymentService;
 import com.shopping.shoppingapi.service.UserService;
 import com.stripe.model.Charge;
@@ -16,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin("*")
 @RequestMapping(value = "/api/payment")
@@ -35,6 +36,9 @@ public class PaymentController {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     public PaymentController(PaymentClient paymentClient) {
@@ -58,12 +62,25 @@ public class PaymentController {
         paymentService.addPaymentDetails(payment);
 
         // Update cart details
-        List<Cart> purchaseItems = cartService.getAllCartItems(Long.parseLong(userId));
+        List<Cart> cartItems = cartService.getAllCartItems(Long.parseLong(userId));
+        Set<Product> cartProducts = new HashSet<>();
 
-        for (Cart item: purchaseItems) {
+        for (Cart item: cartItems) {
+            for (Product product: item.getProducts()) {
+                if (item.getStatus().equals("PENDING")) {
+                    cartProducts.add(product);
+                }
+            }
+            // Mark cart items to purchased
             item.setStatus("PURCHASED");
             cartRepository.save(item);
         }
+
+        // Create order
+        Order order = new Order(user, cartProducts);
+        orderService.addOrder(order);
+
+        // Add delivery
 
         return charge;
     }

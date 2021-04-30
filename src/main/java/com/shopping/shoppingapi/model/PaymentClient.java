@@ -13,7 +13,7 @@ public class PaymentClient {
 
     @Autowired
     PaymentClient() {
-        Stripe.apiKey = "STRIPE SECRET KEY";
+        Stripe.apiKey = "SECRETE KEY";
     }
 
     public Charge chargeCreditCart(String token, Double amount) throws Exception {
