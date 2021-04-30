@@ -15,7 +15,7 @@ public class DeliveryDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Long user_id;
+    private int user_id;
     private int order_id;
     private int zip_code;
     private Date order_date;

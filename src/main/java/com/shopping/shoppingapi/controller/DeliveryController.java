@@ -31,7 +31,7 @@ public class DeliveryController {
         return deliveryService.deleteDeliveryDetails(id);
     }
 
-    @PutMapping("/updatedelivery")
+    @PutMapping("/update/delivery")
     public DeliveryDetails updateDeliveryInfo(@RequestBody DeliveryDetails deliveryDetails){
         return deliveryService.updateDeliveryById(deliveryDetails);
     }

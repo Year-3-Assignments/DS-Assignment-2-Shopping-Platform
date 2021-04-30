@@ -11,15 +11,15 @@ import java.util.List;
 public class DeliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
-    //private User user_id;
-    //private Order order_id
-    // private Order order_date;
+    /*private User user_id;
+    private Order order_id
+     private Order order_date;*/
 
     public DeliveryDetails addDeliveryDetails(DeliveryDetails details){
-       //User user = new User(user_id.getId());
-       // details.setUser_id(user_id.getId());
-        //details.setOrder_id(order_id.getOrder_id());
-        //details.setOrder_date(order_date.getOrder_date());
+       /*User user = new User(user_id.getId());
+       details.setUser_id(user_id.getId());
+        details.setOrder_id(order_id.getOrder_id());
+        details.setOrder_date(order_date.getOrder_date());*/
         return deliveryRepository.save(details);
     }
 
