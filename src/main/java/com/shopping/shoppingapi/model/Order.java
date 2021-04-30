@@ -1,11 +1,16 @@
 package com.shopping.shoppingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +31,17 @@ public class Order {
     @JoinColumn(name= "user_id")
     private User user;
 
+    @ManyToMany
+    private Set<Product> products;
+
     public Order() {}
 
-    public Order(User user) {
+    public Order(User user, Set<Product> products) {
         this.user = user;
         this.orderCode = generateOrderCode();
+        this.createdDate = new Date();
+        this.status = "PENDING";
+        this.products = products;
     }
 
     public String generateOrderCode() {
