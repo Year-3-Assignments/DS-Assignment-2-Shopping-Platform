@@ -80,6 +80,8 @@ public class PaymentController {
         Order order = new Order(user, cartProducts);
         orderService.addOrder(order);
 
+        // SMS sending
+
         // Add delivery
 
         return charge;

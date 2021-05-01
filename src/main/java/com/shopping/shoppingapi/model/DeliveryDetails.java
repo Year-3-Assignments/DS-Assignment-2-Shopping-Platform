@@ -10,13 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "delivery_table")
+@Table(name = "delivery")
 public class DeliveryDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int user_id;
-    private int order_id;
-    private int zip_code;
+    private Integer id;
+    private Integer user_id;
+    private Integer order_id;
+    private Integer zip_code;
     private Date order_date;
 }
