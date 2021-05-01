@@ -1,5 +1,9 @@
 package com.shopping.shoppingapi.controller;
 
+import com.vonage.client.VonageClient;
+import com.vonage.client.sms.SmsSubmissionResponse;
+import com.vonage.client.sms.messages.TextMessage;
+
 import com.shopping.shoppingapi.model.*;
 import com.shopping.shoppingapi.repository.CartRepository;
 import com.shopping.shoppingapi.service.CartService;
@@ -14,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @CrossOrigin("*")
 @RequestMapping(value = "/api/payment")
@@ -80,7 +81,23 @@ public class PaymentController {
         Order order = new Order(user, cartProducts);
         orderService.addOrder(order);
 
+        //SMS
+
         // Add delivery
+        String phoneNumber = user.getPhoneNumber();
+
+        if(phoneNumber != null){
+            Integer orderId = order.getId();
+            Date createdDate = order.getCreatedDate();
+            VonageClient client = VonageClient.builder().apiKey("6a33ffb2").apiSecret("w4JV0ZpXPsn4wOPn").build();
+
+            TextMessage message = new TextMessage("Your order has been created",
+                    phoneNumber,
+                    "Order Id:" + orderId + "\nCreated On:" + createdDate + "\nThank You."
+            );
+
+            SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
+        }
 
         return charge;
     }
