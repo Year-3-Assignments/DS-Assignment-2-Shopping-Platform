@@ -44,7 +44,8 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 2000)
+    @NotNull
     private String imageUrl;
 
     @JsonBackReference
@@ -58,7 +59,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(String productName, Double unitPrice, String description, Integer quantity, Shop shop) {
+    public Product(String productName, Double unitPrice, String description, Integer quantity, String imageUrl, Shop shop) {
         this.productName = productName;
         this.itemCode = generateItemCode();
         this.unitPrice = unitPrice;
@@ -66,6 +67,7 @@ public class Product {
         this.quantity = quantity;
         this.shop = shop;
         this.createdAt = new Date();
+        this.imageUrl = imageUrl;
     }
 
     public Product(String itemCode, @NonNull String productName, Double unitPrice, Date createdAt, String imageUrl) {
