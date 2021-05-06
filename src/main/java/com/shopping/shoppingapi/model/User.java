@@ -3,10 +3,8 @@ package com.shopping.shoppingapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +37,9 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @Column(length = 2000)
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -52,8 +53,15 @@ public class User {
         this.password = password;
     }
 
+    public User(Long userid, String address_1, String address_2, String city, String email){
+        this.id = userid;
+        this.email = email;
+        this.address_1 = address_1;
+        this.address_2 = address_2;
+        this.city = city;
+    }
     public User(String firstName, String lastName, String phoneNumber, String username, String email,
-                String address_1, String address_2, String city, String encode) {
+                String address_1, String address_2, String city, String encode, String imageUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -63,5 +71,6 @@ public class User {
         this.city = city;
         this.username = username;
         this.password = encode;
+        this.imageUrl = imageUrl;
     }
 }
