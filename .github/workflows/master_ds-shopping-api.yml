@@ -49,3 +49,5 @@ jobs:
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f15f3bd5971644d6a3b3e2f3fecc0518 }}
         package: '*.war'
+        
+- task: PublishBuildArtifacts@1
