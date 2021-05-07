@@ -18,6 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p, s FROM Product p, Shop s WHERE p.shop.id=s.id AND p.id = ?1")
     Object getProductToShowBuId(Integer productId);
 
-    @Query(value = "SELECT p, s FROM Product p, Shop s, User u WHERE p.shop.id=s.id")
+    @Query(value = "SELECT p FROM Product p")
     List<Product> getProducts();
 }
