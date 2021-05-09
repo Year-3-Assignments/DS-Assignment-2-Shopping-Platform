@@ -61,7 +61,7 @@ public class CartService {
             Product[] products = new Product[item.getProducts().size()];
             item.getProducts().toArray(products);
 
-            ResponseCart responseCart = new ResponseCart(item.getQuantity(), item.getTotalPrice(), item.getStatus(), products[0]);
+            ResponseCart responseCart = new ResponseCart(item.getId(), item.getQuantity(), item.getTotalPrice(), item.getStatus(), products[0]);
             cartList.add(responseCart);
         }
 
