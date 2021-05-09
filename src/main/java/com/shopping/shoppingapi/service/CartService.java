@@ -137,7 +137,7 @@ public class CartService {
 
         productRepository.save(product);
         cartRepository.deleteById(cartId);
-        return "Cart Item deleted";
+        return "Cart Item deleted" + cartId;
     }
 
     public String deleteCartByUserId(Long userId) {
