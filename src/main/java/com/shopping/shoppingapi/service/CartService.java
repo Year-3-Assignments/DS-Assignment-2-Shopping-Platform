@@ -1,7 +1,9 @@
 package com.shopping.shoppingapi.service;
 
 import com.shopping.shoppingapi.model.Cart;
+import com.shopping.shoppingapi.model.Order;
 import com.shopping.shoppingapi.model.Product;
+import com.shopping.shoppingapi.model.User;
 import com.shopping.shoppingapi.payload.response.ResponseCart;
 import com.shopping.shoppingapi.repository.CartRepository;
 import com.shopping.shoppingapi.repository.ProductRepository;
@@ -11,12 +13,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CartService {
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private EmailSenderService senderService;
 
     @Autowired
     ProductRepository productRepository;
@@ -140,8 +150,24 @@ public class CartService {
         return "Cart Item deleted" + cartId;
     }
 
-    public String deleteCartByUserId(Long userId) {
-        cartRepository.deleteAllByUserId(userId);
-        return "Purchase cart items remove";
+    public void makeCartItemsPurchased(Long userId, User user) {
+        List<Cart> cartItems = getAllCartItems(userId);
+        Set<Product> cartProducts = new HashSet<>();
+
+        for (Cart item: cartItems) {
+            for (Product product: item.getProducts()) {
+                if (item.getStatus().equals("PENDING")) {
+                    cartProducts.add(product);
+                }
+            }
+            item.setStatus("PURCHASED");
+            cartRepository.save(item);
+        }
+        // Create order
+        Order order = new Order(user, cartProducts);
+        orderService.addOrder(order);
+
+        // Send email to the customer
+        senderService.setUpSendEmail(user, order);
     }
 }
