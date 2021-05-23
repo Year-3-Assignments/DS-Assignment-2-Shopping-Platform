@@ -29,6 +29,9 @@ public class CartService {
     private EmailSenderService senderService;
 
     @Autowired
+    private SMSService smsService;
+
+    @Autowired
     ProductRepository productRepository;
 
     public ResponseEntity<Cart> addProductToCart(Cart cart) {
@@ -163,11 +166,15 @@ public class CartService {
             item.setStatus("PURCHASED");
             cartRepository.save(item);
         }
+
         // Create order
         Order order = new Order(user, cartProducts);
         orderService.addOrder(order);
 
         // Send email to the customer
         senderService.setUpSendEmail(user, order);
+
+        // Send sms to the customer
+        smsService.sendSMS(user, order);
     }
 }
