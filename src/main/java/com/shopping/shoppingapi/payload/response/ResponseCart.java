@@ -3,6 +3,7 @@ package com.shopping.shoppingapi.payload.response;
 import com.shopping.shoppingapi.model.Product;
 
 public class ResponseCart {
+    private Long cartId;
     private Integer quantity;
     private Double totalPrice;
     private String status;
@@ -10,7 +11,8 @@ public class ResponseCart {
 
     public ResponseCart() {}
 
-    public ResponseCart(Integer quantity, Double totalPrice, String status, Product product) {
+    public ResponseCart(Long cartId, Integer quantity, Double totalPrice, String status, Product product) {
+        this.cartId = cartId;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.status = status;
@@ -47,5 +49,13 @@ public class ResponseCart {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 }

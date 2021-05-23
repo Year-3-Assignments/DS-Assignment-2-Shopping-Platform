@@ -1,6 +1,7 @@
 package com.shopping.shoppingapi.controller;
 
 import com.shopping.shoppingapi.model.Product;
+import com.shopping.shoppingapi.payload.response.ProductResponse;
 import com.shopping.shoppingapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,8 +30,8 @@ public class ProductController {
 
     // Get product by id
     @GetMapping("/{id}")
-    public Product fetchProductById(@PathVariable Integer id) {
-        return productService.getProductById(id);
+    public Object fetchProductById(@PathVariable Integer id) {
+        return productService.getProductToShowById(id);
     }
 
     @PutMapping("/update")

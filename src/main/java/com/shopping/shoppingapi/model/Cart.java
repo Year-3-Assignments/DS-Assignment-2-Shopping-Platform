@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name="cart")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     private Integer quantity;
